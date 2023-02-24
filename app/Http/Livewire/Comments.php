@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Comment;
 use Carbon\Carbon;
+use App\Models\Comment;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Comments extends Component
 {
-    public $comments;
-
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $newComment;
 
     public function updated($propertyName)
@@ -18,7 +19,6 @@ class Comments extends Component
             'newComment' =>'required|max:255'
         ]);
     }
-
     public function addComment()
     {
         $this->validate([
@@ -29,26 +29,21 @@ class Comments extends Component
             'body'=>$this->newComment,
             'user_id'=>2
        ]);
-
-       $this->comments->prepend($createComment);
        $this->newComment="";
-    }
-
-    public function mount()
-    {
-        $allcomments=Comment::latest()->get();
-        $this->comments=$allcomments;
+       session()->flash('message', 'Post successfully Created.');
     }
 
     public function remove($commentId)
     {
         $comment=Comment::find($commentId);
         $comment->delete();
-        $this->comments=$this->comments->except($commentId);
+        session()->flash('message', 'Post successfully Deleted.');
     }
 
     public function render()
     {
-        return view('livewire.comments');
+        return view('livewire.comments',[
+            'comments' => Comment::latest()->paginate(2)]);
     }
+   
 }

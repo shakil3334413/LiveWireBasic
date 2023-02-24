@@ -3,9 +3,16 @@
         <div class="col-md-12">
             <h1>Comments</h1>
         </div>
-        <div class="col-md-12">
+
+        <div class="col-md-12 p-3 bg-green-300 text-green-600">
+            @if (session()->has('message'))
+                    <div class="alert alert-success bg-green-300 text-green-600">
+                        {{ session('message') }}
+                    </div>
+                @endif
             @error('newComment')<span class="text-danger">{{ $message }}</span> @enderror
             <form wire:submit.prevent="addComment">
+                
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Add Comment" aria-label="Add Comment" aria-describedby="button-addon2" wire:model.debounce.500ms="newComment">
                     <button class="btn btn-outline-primary" type="submit" id="button-addon2">Add</button>
@@ -30,5 +37,6 @@
                 </div>              
             @endforeach
         </div>
+        {{ $comments->links('livewire.pagination-link') }}
    </div>
 </div>
