@@ -2,18 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Comment;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class Comments extends Component
 {
-    public $comments=[
-        [
-            'body'=>'Some quick example text to build on the card title and make up the bulk of the card content',
-            'created_at'=>'3 min ago',
-            'creator'=>'Shakil'
-        ]
-    ];
+    public $comments;
 
     public $newComment;
 
@@ -32,6 +27,13 @@ class Comments extends Component
         ]);
         $this->newComment="";
     }
+
+    public function mount()
+    {
+        $allcomments=Comment::all();
+        $this->comments=$allcomments;
+    }
+
     public function render()
     {
         return view('livewire.comments');

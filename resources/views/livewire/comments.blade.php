@@ -16,8 +16,8 @@
             @foreach($comments as  $comment)
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                    <h5 class="card-title">{{$comment['creator']}} <span class="mr-3 fs-6">{{$comment['created_at']}}</span></h5>
-                    <p class="card-text">{{$comment['body']}}</p>
+                    <h5 class="card-title">{{$comment->user->name}} <span class="mr-3 fs-6">{{$comment->created_at->diffForHumans()}}</span></h5>
+                    <p class="card-text">{{$comment->body}}</p>
                     </div>
                 </div>              
             @endforeach
