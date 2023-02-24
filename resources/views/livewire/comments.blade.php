@@ -14,13 +14,16 @@
         </div>
         <div class="col-md-12">
             @foreach($comments as  $comment)
-                <div class="card">
-                    <div class="card-body just" >
-                        <div>
-                            <h5 class="card-title">{{$comment->user->name}} <span class="mr-3 fs-6">{{$comment->created_at->diffForHumans()}}</span></h5>
-                        </div>
-                        <div>
-                            <h1>X</h1>
+                <div class="card ">
+                    <div class="card-body" >
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">{{$comment->user->name}} <span class="mr-3 fs-6">{{$comment->created_at->diffForHumans()}}</span></h5>
+                            </div>
+                            <div class="">
+                                <button type="button" wire:click="remove({{ $comment->id }})"><i class="fa-solid fa-xmark text-red-200 :hover:text-red-600"  style="cursor: pointer;"></i></button>
+                                
+                            </div>
                         </div>
                         <p class="card-text">{{$comment->body}}</p>
                     </div>
