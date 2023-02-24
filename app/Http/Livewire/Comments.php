@@ -10,9 +10,14 @@ use Livewire\WithPagination;
 class Comments extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
     public $newComment;
+    public $image;
+    protected $listeners = ['fileupload' => 'handlefileUpload'];
 
+    public function handlefileUpload($imageData)
+    {
+        $this->image=$imageData;
+    }
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName, [

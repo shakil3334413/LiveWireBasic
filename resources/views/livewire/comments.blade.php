@@ -11,6 +11,10 @@
                     </div>
                 @endif
             @error('newComment')<span class="text-danger">{{ $message }}</span> @enderror
+            @if($image)
+                <img src="{{ $image }}" alt="" srcset="" width="50px" height="50px">
+            @endif
+            <input type="file" name="" id="image" wire:change="$emit('fileChose')">
             <form wire:submit.prevent="addComment">
                 
                 <div class="input-group mb-3">
@@ -40,3 +44,17 @@
         {{ $comments->links('livewire.pagination-link') }}
    </div>
 </div>
+
+<script>
+    Livewire.on('fileChose',() => {
+       let inputField=document.getElementById('image');
+       let file=inputField.files[0];
+       let reder=new FileReader();
+       reder.onloadend=()=>{
+        Livewire.emit('fileupload',reder.result);
+       }
+       reder.readAsDataURL(file);
+
+    });
+    // console.log(window);
+</script>
