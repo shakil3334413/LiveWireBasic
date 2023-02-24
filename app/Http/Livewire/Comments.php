@@ -14,23 +14,18 @@ class Comments extends Component
 
     public function addComment()
     {
-        // $this->comments[]=[
-        //     'body'=>'New Comment',
-        //     'created_at'=>'10 min ago',
-        //     'creator'=>'Unknon'
-        // ];
+       $createComment=Comment::create([
+            'body'=>$this->newComment,
+            'user_id'=>2
+       ]);
 
-        array_unshift($this->comments,[
-                'body'=>$this->newComment,
-                'created_at'=>Carbon::now()->diffForHumans(),
-                'creator'=>'Unknon'
-        ]);
-        $this->newComment="";
+       $this->comments->prepend($createComment);
+       $this->newComment="";
     }
 
     public function mount()
     {
-        $allcomments=Comment::all();
+        $allcomments=Comment::latest()->get();
         $this->comments=$allcomments;
     }
 
