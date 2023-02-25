@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->text('body');
             $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('super_tic_id')->index();
             $table->timestamps();
         });
     }

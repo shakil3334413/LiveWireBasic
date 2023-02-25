@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class SuperTic extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'question'
+    ];
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

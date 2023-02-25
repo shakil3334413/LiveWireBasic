@@ -15,6 +15,7 @@ class CreateSuperTicsTable extends Migration
     {
         Schema::create('super_tics', function (Blueprint $table) {
             $table->id();
+            $table->string('question');
             $table->timestamps();
         });
     }

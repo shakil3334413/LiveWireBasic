@@ -24,7 +24,17 @@
          @livewireScripts
     </head>
     <body class="antialiased">
-        @livewire('comments');
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 borderd p-2">
+                    @livewire('support-tic');
+                </div>
+                <div class="col-md-8">
+                    @livewire('comments');
+                </div>
+            </div>
+        </div>
+       
         {{-- <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
