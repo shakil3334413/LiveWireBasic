@@ -4,8 +4,11 @@ namespace App\Http\Livewire;
 
 use Carbon\Carbon;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
+use Intervention\Image\ImageManagerStatic;
 
 class Comments extends Component
 {
@@ -29,18 +32,31 @@ class Comments extends Component
         $this->validate([
             'newComment' =>'required|max:255'
         ]);
+        $image=$this->storImage();
+        $createComment=Comment::create([
+                'body'=>$this->newComment,
+                'image'=>$image,
+                'user_id'=>2
+        ]);
+        $this->newComment="";
+        $this->image="";
+        session()->flash('message', 'Post successfully Created.');
+    }
 
-       $createComment=Comment::create([
-            'body'=>$this->newComment,
-            'user_id'=>2
-       ]);
-       $this->newComment="";
-       session()->flash('message', 'Post successfully Created.');
+    public function storImage(){
+        if(!$this->image){
+            return null;
+        } 
+        $img = ImageManagerStatic::make($this->image)->encode('jpg');
+        $name=Str::random().'.jpg';
+        Storage::disk('public')->put($name,$img);
+        return $name;
     }
 
     public function remove($commentId)
     {
         $comment=Comment::find($commentId);
+        Storage::disk('public')->delete($comment->image);
         $comment->delete();
         session()->flash('message', 'Post successfully Deleted.');
     }

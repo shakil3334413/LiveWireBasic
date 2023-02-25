@@ -27,6 +27,9 @@
             @foreach($comments as  $comment)
                 <div class="card ">
                     <div class="card-body" >
+                        @if($comment->image)
+                        <img src="{{$comment->imagePath }}" class="card-img-top" alt="{{$comment->user->name}}" width="200px" height="200px" style="width: 200px;margin-bottom: 10px;">
+                        @endif
                         <div class="d-flex justify-content-between">
                             <div>
                                 <h5 class="card-title">{{$comment->user->name}} <span class="mr-3 fs-6">{{$comment->created_at->diffForHumans()}}</span></h5>
