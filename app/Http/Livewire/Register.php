@@ -4,32 +4,37 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
 
-class Login extends Component
+class Register extends Component
 {
+
     public $form=[
+        'name'=>'',
         'email'=>'',
         'password'=>'',
+        'password_confirmation'=>''
     ];
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName, [
+            'form.name' =>'required',
             'form.email' =>'required|email',
-            'form.password' =>'required'
+            'form.password' =>'required|confirmed'
         ]);
     }
 
     public function submit(){
         $this->validate([
+            'form.name' =>'required',
             'form.email' =>'required|email',
-            'form.password' =>'required'
+            'form.password' =>'required|confirmed'
         ]);
-        Auth::attempt($this->form);
+        
+        User::create($this->form);
         return redirect(route('home'));
     }
     public function render()
     {
-        return view('livewire.login');
+        return view('livewire.register');
     }
 }
